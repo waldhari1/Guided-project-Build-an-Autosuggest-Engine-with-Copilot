@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿﻿using System.Text;
 
 string[] words = {
         "as", "astronaut", "asteroid", "are", "around",
@@ -6,27 +6,24 @@ string[] words = {
         "for", "follows", "forgot", "from", "front",
         "mellow", "mean", "money", "monday", "monster",
         "place", "plan", "planet", "planets", "plans",
-        "the", "their", "they", "there", "towards"};
+        "the", "their", "they", "there", "towards","beans"};
 
 Trie dictionary = InitializeTrie(words);
-SearchWord();
+// SearchWord();
 // PrefixAutocomplete();
 // DeleteWord();
 // GetSpellingSuggestions();
 
-// This method initializes a Trie data structure and inserts all the words from the given array into it.
+// Initialize the Trie dictionary with the given words
 Trie InitializeTrie(string[] words)
 {
     Trie trie = new Trie();
 
-    // Iterate over each word in the array
     foreach (string word in words)
     {
-        // Insert the word into the Trie
         trie.Insert(word);
     }
 
-    // Return the initialized Trie
     return trie;
 }
 
@@ -40,12 +37,12 @@ void SearchWord()
         {
             break;
         }
-        /*
+        
         if (input != null && dictionary.Search(input))
         {
             Console.WriteLine($"Found \"{input}\" in dictionary");
         }
-        */
+        
         else
         {
             Console.WriteLine($"Did not find \"{input}\" in dictionary");
@@ -70,14 +67,14 @@ void DeleteWord()
         {
             break;
         }
-        /*
+        
         if (input != null && dictionary.Search(input))
         {
             dictionary.Delete(input);
             Console.WriteLine($"Deleted \"{input}\" from dictionary\n");
             PrintTrie(dictionary);
         }
-        */
+        
         else
         {
             Console.WriteLine($"Did not find \"{input}\" in dictionary");
@@ -202,9 +199,19 @@ void PrintTrie(Trie trie)
 {
     Console.WriteLine("The dictionary contains the following words:");
     List<string> words = trie.GetAllWords();
+    int counter = 0;
     foreach (string word in words)
     {
-        Console.Write($"{word}, ");
+        Console.Write($"{word,-15}");
+        counter++;
+        if (counter == 5)
+        {
+            Console.WriteLine();
+            counter = 0;
+        }
     }
-    Console.WriteLine();
+    if (counter != 0) // Print a newline if the last line contained less than 5 words
+    {
+        Console.WriteLine();
+    }
 }
