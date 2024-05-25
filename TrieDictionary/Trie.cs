@@ -19,6 +19,20 @@ public class TrieNode
 }
 
 public class Trie
+// Search for a word in the trie
+public bool Search(string word) 
+{
+    TrieNode current = root;
+    foreach (char c in word)
+    {
+        if (!current.HasChild(c))
+        {
+            return false;
+        }
+        current = current.Children[c];
+    }
+    return current.IsEndOfWord;
+}
 {
     private TrieNode root;
 
@@ -30,22 +44,33 @@ public class Trie
     public bool Insert(string word)
     {
         TrieNode current = root;
+        // Traverse the trie and add new nodes if they don't exist
         foreach (char c in word)
         {
+            // If the current node doesn't have the child node, add it
             if (!current.HasChild(c))
             {
+                // Add the child node with the current character
                 current.Children[c] = new TrieNode(c);
             }
+            // Move to the child node with the current character
             current = current.Children[c];
         }
         if (current.IsEndOfWord)
         {
+            // Word already exists in the trie
             return false;
         }
+        // Mark the current node as the end of the word
         current.IsEndOfWord = true;
         return true;
     }
     
+    /// <summary>
+    /// Retrieves a list of suggested words based on the given prefix.
+    /// </summary>
+    /// <param name="prefix">The prefix to search for.</param>
+    /// <returns>A list of suggested words.</returns>
     public List<string> AutoSuggest(string prefix)
     {
         TrieNode currentNode = root;
@@ -53,7 +78,7 @@ public class Trie
         {
             if (!currentNode.HasChild(c))
             {
-                return new List<string>();
+                return new L    /// string>();
             }
             currentNode = currentNode.Children[c];
         }
@@ -62,16 +87,7 @@ public class Trie
 
     private List<string> GetAllWordsWithPrefix(TrieNode root, string prefix)
     {
-        List<string> words = new List<string>();
-        if (root.IsEndOfWord)
-        {
-            words.Add(prefix);
-        }
-        foreach (char c in root.Children.Keys)
-        {
-            words.AddRange(GetAllWordsWithPrefix(root.Children[c], prefix + c));
-        }
-        return words;
+        return null;
     }
 
     public List<string> GetAllWords()
